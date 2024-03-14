@@ -1,0 +1,652 @@
+const char Intro_page[] PROGMEM = R"=====(
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=devive-width, initial">
+    <title>RESEARCH AND SIMULATE SPEED SIGN RECOGNITION SYSTEM IN SELF-DRIVING CAR</title>
+    <link rel="icon" href="/Split_flap/assets/img/content_image/" type="image/gif" sizes="16x16">
+    <link rel="stylesheet" href="./Split_flap/assets/css/style.css">
+    <link rel="stylesheet" href="./Split_flap/assets/font/themify-icons-font/themify-icons/themify-icons.css">
+    <link rel="stylesheet"
+        href="https://maxst.icons8.com/vue-static/landings/line-awesome/font-awesome-line-awesome/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://code.iconify.design/2/2.2.1/iconify.min.js"></script>
+    <style>
+        /* Reset CSS */
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            font-family: Arial, Helvetica, sans-serif;
+            scroll-behavior: smooth;
+        }
+   /* Common */
+        .clear {
+            clear: both;
+        }
+
+        .text-white {
+            color: #fff !important;
+        }
+
+        .text-center {
+            text-align: center !important;
+        }
+
+        .row {
+            margin-left: 8px;
+            margin-right: 8px;
+        }
+
+        .row::after {
+            content: "";
+            display: block;
+            clear: both;
+        }
+
+        .col {
+            float: left;
+            padding-left: 8px;
+            padding-right: 8px;
+        }
+
+        .col-full {
+            width: 100%;
+        }
+
+        .col-half {
+            width: 50%;
+        }
+
+        .col-third {
+            width: 33.3333%;
+        }
+
+        .mt-8 {
+            margin-top: 8px !important;
+        }
+
+        .mt-16 {
+            margin-top: 16 !important;
+        }
+
+        /* ---------------------------------------------------------------------------------- */
+        /* Wraper */
+        #wrapper {
+            width: 100%;
+        }
+
+        /* Header */
+        #header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 50px;
+            background-color: #000;
+            z-index: 1;
+        }
+
+        #nav {
+            display: inline-block;
+        }
+
+        #nav {
+            list-style-type: none;
+        }
+
+        #nav>li {
+            display: inline-block;
+        }
+
+        #nav li {
+            position: relative;
+        }
+
+        #nav>li>a {
+            color: rgb(255, 255, 255);
+            text-transform: uppercase;
+        }
+
+        #nav li a {
+            text-decoration: none;
+            line-height: 50px;
+            padding: 0 24px;
+            display: block;
+        }
+
+        #nav>li:hover>a {
+            color: #000;
+            background-color: #ccc;
+        }
+
+        #nav .nav-view-list {
+            font-size: 24px;
+        }
+
+        /* End Header */
+
+
+        /* Begin Slideshow */
+        #Home {
+            width: 100%;
+            height: 1000px;
+            overflow: hidden;
+            padding-top: 50px;
+        }
+
+        .slides {
+            width: 200%;
+            height: 100%;
+            display: flex;
+        }
+
+        .slides input {
+            display: none;
+        }
+
+        .slide {
+            width: 50%;
+            transition: 2s;
+        }
+
+        .slide img {
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+        }
+
+        /* Manual Slide navigation */
+        .navigation-manual {
+            position: absolute;
+            width: 100%;
+            margin-top: 800px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .manual-btn {
+            border: 2px solid rgb(255, 255, 255);
+            padding: 5px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: 1s;
+        }
+
+        .manual-btn:not(:last-child) {
+            margin-right: 40px;
+        }
+
+        .manual-btn:hover {
+            background: #b2b2b2;
+        }
+
+        #radio1:checked~.first {
+            margin-left: 0;
+        }
+
+        #radio2:checked~.first {
+            margin-left: -50%;
+        }
+
+        /* #radio3:checked~.first {
+            margin-left: -66.66667%;
+        } */
+
+        /* auto navigation  */
+        .navigaition-auto {
+            position: absolute;
+            display: flex;
+            width: 100%;
+            justify-content: center;
+            margin-top: 460px;
+        }
+
+        .navigaition-auto div {
+            border: 2px solid #40D3DC;
+            padding: 5px;
+            border-radius: 10px;
+            transition: 1s;
+        }
+
+        .navigaition-auto div:not(:last-child) {
+            margin-right: 40px;
+        }
+
+        #radio1:checked~.navigaition-auto .auto-btn1 {
+            background-color: #40D3DC;
+        }
+
+        #radio2:checked~.navigaition-auto .auto-btn2 {
+            background-color: #40D3DC;
+        }
+
+        /* #radio3:checked~.navigaition-auto .auto-btn3 {
+            background-color: #40D3DC;
+        } */
+
+        /* End SlideShow */
+
+        /* Start Content */
+        #content {
+            height: auto;
+        }
+
+        .content-section {
+            width: 80%;
+            padding: 48px 0 48px 0;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Theory */
+        #content .img-box .section-img {
+            width: 80%;
+            height: 80%;
+            border-radius: 4px;
+            padding: 0;
+        }
+
+        #theory-content .section-heading {
+            width: 100%;
+            font-size: 40px;
+            text-align: center;
+            font-weight: 700;
+            letter-spacing: 3px;
+            color: #000000;
+        }
+
+        #SomethingNews .section-heading {
+            font-size: 40px;
+        }
+
+        #content .section-sub-heading {
+            font-size: 20px;
+            text-align: center;
+            margin-top: 15px;
+            font-style: italic;
+            opacity: 0.6;
+        }
+
+        #content .about-text {
+            margin-top: 25px;
+            font-size: 25px;
+            text-align: justify;
+            line-height: 1.4;
+            letter-spacing: 0.5px;
+        }
+
+        /* Content 2 */
+        .content-2 {
+            background-image: linear-gradient(-90deg, #cf84fb, #35ced0);
+        }
+
+        .section-heading {
+            width: 100%;
+            font-size: 40px;
+            text-align: center;
+            font-weight: 800;
+            letter-spacing: 3px;
+            color: #000000;
+        }
+
+        #Theoretical .about-text {
+            margin-top: 25px;
+            font-size: 20px;
+            text-align: justify;
+            line-height: 1.4;
+            color: rgb(0, 0, 0);
+        }
+
+        .history{
+                overflow-x: visible;
+                overflow-y:scroll;
+                height:200px;
+            }
+
+        .video-box {
+            height: 100%;
+            padding-top: 18px;
+            padding-bottom: 50px;
+        }
+
+        .video-box .section-video {
+            width: 100%;
+        }
+
+        /* Content 3 */
+        .content-3 {
+            background-image: linear-gradient(90deg, #e0f0f0, #243b37);
+            padding-top: 48px;
+            padding-bottom: 48px;
+        }
+
+        #Action .text-box {
+            color: rgb(18, 5, 5);
+            padding: 16px;
+        }
+
+
+        /* Content 4 */
+        .content-4 {
+            background-color: #ccc;
+            padding: 20px;
+        }
+
+        .text-usecase {
+            text-align: center;
+            font-size: 52px;
+            letter-spacing: 2px;
+            line-height: 52px;
+        }
+
+        .gallery {
+            border: 1px solid #ccc;
+        }
+
+        .gallery:hover {
+            border: 1px solid #777;
+        }
+
+        .gallery img {
+            position: relative;
+            width: 100%;
+            height: 400px;
+        }
+
+        .img-gallery {
+            height: 100%;
+            width: 100%;
+            object-fit: cover;
+        }
+
+        .desc {
+            padding: 15px;
+            text-align: center;
+            font-weight: 800;
+        }
+
+        .responsive {
+            padding: 12px 6px;
+            float: left;
+            width: 33.333333%;
+            height: 50%;
+        }
+
+        @media only screen and (max-width: 700px) {
+            .responsive {
+                width: 49.99999%;
+                margin: 6px 0;
+            }
+        }
+
+        @media only screen and (max-width: 500px) {
+            .responsive {
+                width: 100%;
+            }
+        }
+
+        footer {
+            background: #111;
+            height: auto;
+            width: 100%;
+            font-family: "Open Sans";
+            padding-top: 40px;
+            color: #fff;
+        }
+
+        .footer-content {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            text-align: center;
+        }
+
+        .footer-content h3 {
+            font-size: 1.8rem;
+            font-weight: 400;
+            text-transform: capitalize;
+            line-height: 3rem;
+        }
+
+        .footer-content p {
+            max-width: 500px;
+            margin: 10px auto;
+            line-height: 28px;
+            font-size: 14px;
+        }
+
+        .socials {
+            list-style: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 45px;
+            margin: 1rem 0 3rem 0;
+        }
+
+        .socials li {
+            margin: 0 10px;
+        }
+
+        .fa {
+            padding: 4px 7px 4px 4px;
+            font-size: 30px;
+            width: 50px;
+            text-align: center;
+            text-decoration: none;
+            margin: 5px 2px;
+            border-radius: 10px;
+        }
+
+        .fa:hover {
+            opacity: 0.7;
+        }
+
+        .fa-facebook {
+            background: #3B5998;
+            color: white;
+        }
+
+        .fa-google {
+            background: #dd4b39;
+            color: white;
+        }
+
+        .fa-phone {
+            background: #48E443;
+            color: white;
+        }
+
+        .fa-envelope {
+            background: red;
+            color: white;
+        }
+
+        .socials a {
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="wrapper" class="text-center">
+        <div id="header">
+            <ul id="nav">
+                <li><a href="#Home">Home</a></li>
+                <li><a href="#Theoretical">Theoretical</a></li>
+                <!-- <li><a href="#Action">Action</a></li> -->
+                <li><a href="#SomethingNews">What's new ?</a></li>
+                <!-- <li><a href="#Applications">Applications</a></li> -->
+                <li><a href="#Contact">Contact</a></li>
+                <li><a href="#Realtime_data">Realtime Data</a></li>
+
+            </ul>
+        </div>
+
+        <!-- SlideShow Container -->
+        <div id="Home">
+            <div class="slides text-center">
+                <!-- Radio buttons Start -->
+                <input type="radio" name="radio-btn" id="radio1">
+                <input type="radio" name="radio-btn" id="radio2">
+                <!-- <input type="radio" name="radio-btn" id="radio3"> -->
+                <!-- Radio buttons End -->
+
+                <!-- Slide images start -->
+                <div class="slide first">
+                    <img src="C:\Users\Admin\Downloads\pc.jpg" alt="">
+                </div>
+
+                <div class="slide">
+                    <img src="https://drive.google.com/file/d/1oZph_qIfdH_vi6arlN8U4zTdfMqnvYlf/view?usp=drive_link" alt="">
+                </div>
+
+                <!-- <div class="slide slide3">
+                    <img src="https://drive.google.com/uc?export=view&id=1wW7ieIDifw6raCQmnwY_fzD4Y7zUPZkX" alt="">
+                </div> -->
+
+                <!-- Automatic navigation start -->
+                <div class="navigation-auto">
+                    <div class="auto-btn1"></div>
+                    <div class="auto-btn2"></div>
+                    <!-- <div class="auto-btn3"></div> -->
+                </div>
+                <!-- Automatic navigation end -->
+
+                <!-- Manual navigation start -->
+                <div class="navigation-manual">
+                    <label for="radio1" class="manual-btn"></label>
+                    <label for="radio2" class="manual-btn"></label>
+                    <!-- <label for="radio3" class="manual-btn"></label> -->
+                </div>
+                <!-- Manual navigation end -->
+
+                <div class="clear"></div>
+            </div>
+        </div>
+        <!-- End Slideshow -->
+
+        <!-- Begin Content  -->
+        <div id="content">
+            <!-- Start theory -->
+            <div id="Theoretical" class="row content-section">
+                <!-- Img -->
+                <div class="col col-half img-box">
+                    <img class="section-img"
+                        src="https://travelupdate.com/wp-content/uploads/2020/02/Split-flap-Solari-departures-board-Qantas-First-Class-lounge-Sydney-1066x640.jpg"
+                        alt="">
+                </div>
+
+                <!-- Theory -->
+                <div class="col col-half text-box">
+                    <h2 class="section-heading text-center">RESEARCH AND SIMULATE SPEED SIGN RECOGNITION SYSTEM IN SELF-DRIVING CAR</h2>
+                    <p class="section-sub-heading">Theoretical foundations of Model</p>
+                    <p class="about-text">A split-flap display, often known as a flap display, is an outstanding
+                        installation: the combination of electromechanical, artistic, and technological elements.
+                        It frequently used as a public transportation schedule at airports and train stations in Central
+                        European countries. The familiar 'clack clack clack' sound, the gentle freeze from rotating flap
+                        cards and character
+                        information displays would all amaze onlookers.
+                    </p>
+                </div>
+            </div>
+            <!-- End theory -->
+
+        
+
+            <!-- Begin Content 3 -->
+            <div id="SomethingNews" class="row content-3">
+                <div class="row content-section">
+                    <!-- Theory -->
+                    <div class="col col-half text-box">
+                        <h2 class="section-heading text-center">What's new ?</h2>
+                        <!-- <p class="section-sub-heading">Theoretical foundations of Split-Flap display</p> -->
+                        <p class="about-text">Each split-flap display is carefully crafted for your unique project.
+                            Every module contains 64 alphanumeric flaps in Vietnamese with accent marks and the English
+                            alphabet,
+                            colors, and some punctuation marks.
+                            The basic displays with 6 letters, each unit has 16cm Height x 9.5cm Width.
+                            You can place the displays on shelf or into frames.
+                        </p>
+                    </div>
+
+                    <div class="col col-half img-box">
+                        <img class="section-img"
+                            src="https://drive.google.com/uc?export=view&id=1wW7ieIDifw6raCQmnwY_fzD4Y7zUPZkX" alt="">
+                    </div>
+                </div>
+            </div>
+            <!-- End Content-3 -->
+
+            <!-- Begin Content 4 -->
+            <div id="Realtime_data" class="row content-3">
+                <div class="row content-section">
+                    <!-- Theory -->
+                    <div class="col col-half text-box">
+                        <h2 class="section-heading text-center">Realtime Log</h2>
+                        <!-- <p class="section-sub-heading">Theoretical foundations of Split-Flap display</p> -->
+                        <p class="about-text">
+                        </p>
+                    </div>
+
+                    <div class="col col-half img-box">
+                        <img class="section-img"
+                            src="https://drive.google.com/uc?export=view&id=1wW7ieIDifw6raCQmnwY_fzD4Y7zUPZkX" alt="">
+                    </div>
+                </div>
+            </div>
+            <!-- End Content-3 -->
+
+            
+        </div>
+    </div>
+
+    <footer id="Contact">
+        <div class="footer-content">
+            <h3>RESEARCH AND SIMULATE SPEED SIGN RECOGNITION SYSTEM IN SELF-DRIVING CAR</h3>
+            <ul class="socials col-third">
+                <li>
+                    <span><i class="fa fa-facebook"></i></span>
+                    <p><a href="https://www.facebook.com/profile.php?id=100023887955215" target="_blank">Nguyen Anh Huy</a></p>
+                </li>
+
+                <li>
+                    <span><i class="fa fa-phone"></i></span>
+                    <p><a href="#">0703299552</a></p>
+                </li>
+
+                <li>
+                    <span><i class="fa fa-envelope"></i></span>
+                    <p><a href="#" style="left:0">18146022@student.hcmute.edu.vn</a></p>
+                </li>
+            </ul>
+        </div>
+    </footer>
+
+    <script>
+        var counter = 1;
+        setInterval(function () {
+            document.getElementById('radio' + counter).checked = true;
+            counter++;
+            if (counter > 2) {
+                counter = 1;
+            }
+        }, 2000);
+    </script>
+</body>
+
+
+</html>
+
+
+
+)=====";

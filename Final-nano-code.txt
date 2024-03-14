@@ -1,0 +1,401 @@
+#include <string.h>
+#include <Wire.h>
+//------------------------------------Include libraries
+byte step = 0, step_d = 0;
+String data = "65@66@67@68@69@70";
+//------------------------------------Inital store variabe
+class Motor {
+  private:
+    byte Step;
+    byte Dir;
+    byte Sensor;
+    byte runStepChar = 0;
+    byte runStepSign = 0;
+    byte stepChar = 0;
+    byte stepSign = 0;
+    byte currentStepForChar = 0;
+    byte currentStepForSign = 0;
+  public:
+//------------------------------------Declare variables
+    Motor(byte Dir, byte Step, byte Sensor)
+    {
+      this->Step = Step;
+      this->Dir = Dir;
+      this->Sensor = Sensor;
+      init();
+    }
+//------------------------------------Declare pins
+    void init()
+    {
+      pinMode(Step, OUTPUT); //Step pin as output
+      pinMode(Dir, OUTPUT);
+      digitalWrite(Step, LOW); // Currently no stepper motor movement
+      digitalWrite(Dir, LOW);
+    }
+//------------------------------------Initial pin output and direction
+    void runChar(int runStepChar)
+    {
+      digitalWrite(Dir, HIGH); int pd = 700;
+      int step_to_run = 32 * runStepChar;
+      for (int i = 0; i <= step_to_run; i++)
+      {
+        digitalWrite(Step, HIGH);  delayMicroseconds(pd);
+        digitalWrite(Step, LOW); delayMicroseconds(pd);
+      }
+    }
+    void runSign(int runStepSign)
+    {
+      digitalWrite(Dir, HIGH); int pd = 700;
+      int step_to_run = 818 * runStepSign; // số step cua3 1 vị trí x2 vì tỉ lệ bánh răng 1/2
+      for (int i = 0; i <= step_to_run; i++)
+      {
+        digitalWrite(Step, HIGH);  delayMicroseconds(pd);
+        digitalWrite(Step, LOW); delayMicroseconds(pd);
+      }
+    }
+//------------------------------------Method to run tone mark and letter motors
+    void absHomeChar()
+    {
+      int pd = 700;   // Set motor speed pulse duration
+      runChar(5);
+      while (digitalRead(2) == 1)  // Move motor until home position reached
+      {
+        digitalWrite(Dir, HIGH);
+        digitalWrite(Step, HIGH); delayMicroseconds(pd);
+        digitalWrite(Step, LOW);  delayMicroseconds(pd);
+      }
+    }
+    void homeChar()
+    {
+      int pd = 700;   // Set motor speed pulse duration
+      if (currentStepForChar == 1)
+      {
+        runChar(2);
+        currentStepForChar = 0;
+      }
+      while (digitalRead(2) == 1)  // Move motor until home position reached
+      {
+        digitalWrite(Dir, HIGH);
+        digitalWrite(Step, HIGH); delayMicroseconds(pd);
+        digitalWrite(Step, LOW);  delayMicroseconds(pd);
+      }
+      currentStepForChar = 0;
+    }
+    void homeSign()
+    {
+      int pd = 700;   // Set motor speed pulse duration
+      while (digitalRead(10) == 1)  // Move motor until home position reached
+      {
+        digitalWrite(Dir, HIGH);
+        digitalWrite(Step, HIGH); delayMicroseconds(pd);
+        digitalWrite(Step, LOW);  delayMicroseconds(pd);
+      }
+      currentStepForSign = 0;
+    }
+//------------------------------------Method to homing the motors
+    void checkToRunChar(int step)
+    {
+      stepChar = step;
+      Serial.print("stepChar >> ");
+      Serial.println(stepChar);
+      byte runStep;
+
+      byte step_to_finish_this_rev = 0;
+      byte step_for_next_rev = 0;
+      if (stepChar >= currentStepForChar)
+      {
+        Serial.print("Current Char Step before >> ");
+        Serial.println(currentStepForChar);
+        Serial.println("Case 1 Char");
+        runStep = stepChar - currentStepForChar;
+        currentStepForChar = stepChar;
+        Serial.print("runStep Char >> ");
+        Serial.println(runStep);
+
+        Serial.print("Current Char Step after>> ");
+        Serial.println(currentStepForChar);
+      }
+      else {
+        Serial.print("Current Char Step before >> ");
+        Serial.println(currentStepForChar);
+        Serial.println("Case 2 Char");
+
+        //        step_to_finish_this_rev = 64 - currentStepForChar;
+        homeChar();
+        step_for_next_rev = stepChar - 0;
+        //        runStep = step_to_finish_this_rev + step_for_next_rev;
+        Serial.print("runStep >> ");
+        Serial.println(runStep);
+        runStep = step_for_next_rev;
+        currentStepForChar = step_for_next_rev;
+        Serial.print("Current Char Step after>> ");
+        Serial.println(currentStepForChar);
+      }
+      runChar(runStep);
+    }
+    void checkToRunSign(int step)
+    {
+      stepSign = step;
+      Serial.print("stepSign >> ");
+      Serial.println(stepSign);
+      byte runStep;
+      byte step_to_finish_this_rev = 0;
+      byte step_for_next_rev = 0;
+      if (stepSign >= currentStepForSign)
+      {
+        Serial.print("Current Sign Step before >> ");
+        Serial.println(currentStepForSign);
+        Serial.println("Case 1 Sign");
+
+        runStep = stepSign - currentStepForSign;
+        currentStepForSign = stepSign;
+        Serial.print("runStep Sign >> ");
+        Serial.println(runStep);
+
+        Serial.print("Current Sign Step after>> ");
+        Serial.println(currentStepForSign);
+      }
+      else {
+        Serial.print("Current Sign Step before>> ");
+        Serial.println(currentStepForSign);
+        Serial.println("Case 2 Sign");
+
+        //        step_to_finish_this_rev = 6 - currentStepForSign;
+        homeSign();
+        step_for_next_rev = stepSign - 0;
+        //        runStep = step_to_finish_this_rev + step_for_next_rev;
+        runStep = step_for_next_rev;
+        Serial.print("runStep >> ");
+        Serial.println(runStep);
+        currentStepForSign = step_for_next_rev;
+        Serial.print("Current Sign Step after>> ");
+        Serial.println(currentStepForSign);
+      }
+      runSign(runStep);
+    }
+//------------------------------------Method to checking the position and giving correct steps for the motors
+};
+//------------------------------------------------------------------
+Motor motorChar(6, 7, 2);
+Motor motorSign(11, 12, 10);
+//------------------------------------------------------------------
+void setStep(String data)
+{
+  Serial.print("Data received for this block >> ");
+  Serial.println(data);
+  // Character without sign except dấu nặng <(")
+  // step for character drum --> step
+  // step for sign drum      --> step_d = 0;
+  if (data == "65")         step = 1, step_d = 0; //A
+  else if (data == "7840")  step = 2, step_d = 0; //Ạ
+  else if (data == "258")   step = 3, step_d = 0; //Ă
+  else if (data == "7862")  step = 4, step_d = 0; //Ặ
+  else if (data == "194")   step = 5, step_d = 0; //Â
+  else if (data == "7852")  step = 6, step_d = 0; //Ậ
+  else if (data == "66")    step = 7, step_d = 0; //B
+  else if (data == "67")    step = 8, step_d = 0; //C
+  else if (data == "68")    step = 9, step_d = 0; //D
+  else if (data == "272")   step = 10, step_d = 0; //Đ
+  else if (data == "69")    step = 11, step_d = 0; //E
+  else if (data == "7864")  step = 12, step_d = 0; //Ẹ
+  else if (data == "202")   step = 13, step_d = 0; //Ê
+  else if (data == "7878")  step = 14, step_d = 0; //Ệ
+  else if (data == "70")    step = 15, step_d = 0; //F
+  else if (data == "71")    step = 16, step_d = 0; //G
+  else if (data == "72")    step = 17, step_d = 0; //H
+  else if (data == "73")    step = 18, step_d = 0; //I
+  else if (data == "7882")  step = 19, step_d = 0; //Ị
+  else if (data == "74")    step = 20, step_d = 0; //J
+  else if (data == "75")    step = 21, step_d = 0; //K
+  else if (data == "76")    step = 22, step_d = 0; //L
+  else if (data == "77")    step = 23, step_d = 0; //M
+  else if (data == "78")    step = 24, step_d = 0; //N
+  else if (data == "79")    step = 25, step_d = 0; //O
+  else if (data == "7884")  step = 26, step_d = 0; //Ọ
+  else if (data == "212")   step = 27, step_d = 0; //Ô
+  else if (data == "7896")  step = 28, step_d = 0; //Ộ
+  else if (data == "416")   step = 29, step_d = 0; //Ơ
+  else if (data == "7906")  step = 30, step_d = 0; //Ợ
+  else if (data == "80")    step = 31, step_d = 0; //P
+  else if (data == "81")    step = 32, step_d = 0; //Q
+  else if (data == "82")    step = 33, step_d = 0; //R
+  else if (data == "83")    step = 34, step_d = 0; //S
+  else if (data == "84")    step = 35, step_d = 0; //T
+  else if (data == "85")    step = 36, step_d = 0; //U
+  else if (data == "7908")  step = 37, step_d = 0; //Ụ
+  else if (data == "431")   step = 38, step_d = 0; //Ư
+  else if (data == "7920")  step = 39, step_d = 0; //Ự
+  else if (data == "86")    step = 40, step_d = 0; //V
+  else if (data == "87")    step = 41, step_d = 0; //W
+  else if (data == "88")    step = 42, step_d = 0; //X
+  else if (data == "89")    step = 43, step_d = 0; //Y
+  else if (data == "7924")  step = 44, step_d = 0; //Ỵ
+  else if (data == "90")    step = 45, step_d = 0; //Z
+  // Numbers
+  else if (data == "48")    step = 46, step_d = 0; //0
+  else if (data == "49")    step = 47, step_d = 0; //1
+  else if (data == "50")    step = 48, step_d = 0; //2
+  else if (data == "51")    step = 49, step_d = 0; //3
+  else if (data == "52")    step = 50, step_d = 0; //4
+  else if (data == "53")    step = 51, step_d = 0; //5
+  else if (data == "54")    step = 52, step_d = 0; //6
+  else if (data == "55")    step = 53, step_d = 0; //7
+  else if (data == "56")    step = 54, step_d = 0; //8
+  else if (data == "57")    step = 55, step_d = 0; //9
+  // Signs
+  else if (data == "46")    step = 57, step_d = 0; //.
+  else if (data == "44")    step = 56, step_d = 0; //,
+  else if (data == "63")    step = 58, step_d = 0; //?
+  else if (data == "33")    step = 59, step_d = 0; //!
+  else if (data == "36")    step = 60, step_d = 0; //$
+  // Colors
+  else if (data == "60")    step = 61, step_d = 0; //< ORANGE
+  else if (data == "62")    step = 62, step_d = 0; //> BLUE
+  else if (data == "47")    step = 63, step_d = 0; //-/ PINK
+  // Characters with sign
+  // Không dấu = 0; Sắc = 1; Huyền = 2; Hỏi = 3; Ngã = 4;
+  // A
+  else if (data == "193")   step = 1, step_d = 1; //Á
+  else if (data == "192")   step = 1, step_d = 2; //À
+  else if (data == "7842")  step = 1, step_d = 3; //Ả
+  else if (data == "195")   step = 1, step_d = 4; //Ã
+  // Ă
+  else if (data == "7854")  step = 3, step_d = 1; //Ắ
+  else if (data == "7856")  step = 3, step_d = 2; //Ằ
+  else if (data == "7858")  step = 3, step_d = 3; //Ẳ
+  else if (data == "7860")  step = 3, step_d = 4; //Ẵ
+  // Â
+  else if (data == "7844")  step = 5, step_d = 1; //Ấ
+  else if (data == "7846")  step = 5, step_d = 2; //Ầ
+  else if (data == "7848")  step = 5, step_d = 3; //Ẩ
+  else if (data == "7850")  step = 5, step_d = 4; //Ẫ
+  // E
+  else if (data == "201")   step = 11, step_d = 1; //É
+  else if (data == "200")   step = 11, step_d = 2; //È
+  else if (data == "7866")  step = 11, step_d = 3; //Ẻ
+  else if (data == "7868")  step = 11, step_d = 4; //Ẽ
+  // Ê
+  else if (data == "7870")  step = 13, step_d = 1; //Ế
+  else if (data == "7872")  step = 13, step_d = 2; //Ề
+  else if (data == "7874")  step = 13, step_d = 3; //Ể
+  else if (data == "7876")  step = 13, step_d = 4; //Ễ
+  // I
+  else if (data == "205")   step = 18, step_d = 1; //Í
+  else if (data == "204")   step = 18, step_d = 2; //Ì
+  else if (data == "7880")  step = 18, step_d = 3; //Ỉ
+  else if (data == "296")   step = 18, step_d = 4; //Ĩ
+  // O
+  else if (data == "211")   step = 25, step_d = 1; //Ó
+  else if (data == "210")   step = 25, step_d = 2; //Ò
+  else if (data == "7886")  step = 25, step_d = 3; //Ỏ
+  else if (data == "213")   step = 25, step_d = 4; //Õ
+  // Ô
+  else if (data == "7888")  step = 27, step_d = 1; //Ố
+  else if (data == "7890")  step = 27, step_d = 2; //Ồ
+  else if (data == "7892")  step = 27, step_d = 3; //Ổ
+  else if (data == "7894")  step = 27, step_d = 4; //Ỗ
+  // Ơ
+  else if (data == "7898")  step = 29, step_d = 1; //Ớ
+  else if (data == "7900")  step = 29, step_d = 2; //Ờ
+  else if (data == "7902")  step = 29, step_d = 3; //Ở
+  else if (data == "7904")  step = 29, step_d = 4; //Ỡ
+  // U
+  else if (data == "218")   step = 36, step_d = 1; //Ú
+  else if (data == "217")   step = 36, step_d = 2; //Ù
+  else if (data == "7910")  step = 36, step_d = 3; //Ủ
+  else if (data == "360")   step = 36, step_d = 4; //Ũ
+  // Ư
+  else if (data == "7912")  step = 38, step_d = 1; //Ứ
+  else if (data == "7914")  step = 38, step_d = 2; //Ừ
+  else if (data == "7916")  step = 38, step_d = 3; //Ử
+  else if (data == "7918")  step = 38, step_d = 4; //Ữ
+  // Y
+  else if (data == "221")   step = 43, step_d = 1; //Ý
+  else if (data == "7922")  step = 43, step_d = 2; //Ỳ
+  else if (data == "7926")  step = 43, step_d = 3; //Ỷ
+  else if (data == "7928")  step = 43, step_d = 4; //Ỹ
+
+  // 32
+  else if  (data == "32")
+  {
+    step = 0, step_d = 0;
+    motorChar.homeChar();
+    motorSign.homeSign();
+  }
+  else if (data == "43")  motorChar.runChar(1);
+  else if (data == "45")  motorSign.runSign(1);
+  else if (data == "61")
+  {
+    for (int i = 1; i < 64; i++)
+    {
+      motorChar.checkToRunChar(i);
+      delay(1000);
+    }
+  }
+}
+//-----------------------------------------------------------Function to set the index of characters
+String getValue(String data, char separator, int index)
+{
+  int found = 0;
+  int strIndex[] = {0, -1};
+  int maxIndex = data.length() - 1;
+
+  for (int i = 0; i <= maxIndex && found <= index; i++) {
+    if (data.charAt(i) == separator || i == maxIndex) {
+      found++;
+      strIndex[0] = strIndex[1] + 1;
+      strIndex[1] = (i == maxIndex) ? i + 1 : i;
+    }
+  }
+
+  return found > index ? data.substring(strIndex[0], strIndex[1]) : "";
+}
+//-----------------------------------------------------------Function the split words in to letters
+void receiveEvent(int howMany)
+{
+  data = "";
+  while (Wire.available() > 0)
+  {
+    data += (char)Wire.read();
+  }
+  Serial.print("Last step >> ");
+  Serial.println(step);
+  Serial.println(data);
+  Serial.print("String received >> ");
+  Serial.println(data);
+  String part0 = getValue(data, '@', 0);
+  data = "";
+  Serial.print("Data slice >> ");
+  Serial.println(part0);
+  setStep(part0);
+  if (part0 == "32")
+  {
+    Serial.print("Step >> ");
+    Serial.println("homming");
+    Serial.print("Step_sign >> ");
+    Serial.println("homming");
+  }
+  else
+  {
+    Serial.print("Step >> ");
+    Serial.println(step);
+    Serial.print("Step_sign >> ");
+    Serial.println(step_d);
+    motorChar.checkToRunChar(step);
+    motorSign.checkToRunSign(step_d);
+  }
+}
+//-----------------------------------------------------------Receive ISR
+void setup() {
+  // put your setup code here, to run once:
+  delay(1500);
+  Serial.begin(9600);
+  //------------------
+  Wire.begin(8);
+  Wire.onReceive(receiveEvent); /* register receive event */
+  //-----------------------------------------------------------
+  motorChar.absHomeChar();
+  motorSign.homeSign();
+}
+void loop() {
+}
