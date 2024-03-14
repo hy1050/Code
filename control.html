@@ -385,7 +385,9 @@ const char Control_page[] PROGMEM = R"=====(
             .history{
                 overflow-x: visible;
                 overflow-y:scroll;
-                height:200px;
+                background-color: #fff;
+                height:700px;
+                margin-top: 5%;
             }
 
             .setup-container{
@@ -533,9 +535,9 @@ const char Control_page[] PROGMEM = R"=====(
                                 <tr>
                                 <th scope="col" class="col-1">STT</th>
                                 <th scope="col" class="col-2">Traffic-Sign-Detected</th>
-                                <th scope="col" class="col-2">Accuracy</th>
-                                <th scope="col" class="col-2">Current-Speed</th>
-                                <th scope="col" class="col-2">Date-Time</th>
+                                <th scope="col" class="col-3">Accuracy</th>
+                                <th scope="col" class="col-4">Current-Speed</th>
+                                <th scope="col" class="col-5">Date-Time</th>
                                 </tr>
                             </thead>
     
@@ -551,7 +553,7 @@ const char Control_page[] PROGMEM = R"=====(
             <div class="container">
                 <div class="row">
                     <div class="col text-center">
-                        <button type="button" class="submit-button" id= "btn-sb" onclick="upload();">Get Value</button>
+                        <button type="button" class="submit-button" id= "btn-sb" onclick="upload();">Export CSV</button>
                         <!-- add hidden input to save value which will be send to database -->
                         <input type="hidden" id="send" name="value" value=""> <!-- value of id="send" is data that needs to insert into database; name="value" is comlumn name indatabase-->
                         <button type="button" class="reset-button" onclick="resetAll();">Reset</button>
@@ -565,7 +567,7 @@ const char Control_page[] PROGMEM = R"=====(
 
         <div class="setup-modal">
             <div class="setup-container js-setup-container">
-                <div class="setup-close js-setup-close">
+                <!-- <div class="setup-close js-setup-close">
                     <i class="fa fa-close"></i>
                 </div>
 
@@ -573,9 +575,9 @@ const char Control_page[] PROGMEM = R"=====(
                     <i class="setup-heading-icon ti-settings"></i>
                     History
                     <button class="js-setup-time btn-clear" onclick="clearHistory();"><i class="fa fa-trash"></i> Clear</button>
-                </header>
+                </header> -->
 
-                <div class="setup-body text-center history">
+                <!-- <div class="setup-body text-center history">
                     <table class="table table-bordered table-hover" id="myHistory">
                         <thead>
                             <tr>
@@ -589,7 +591,7 @@ const char Control_page[] PROGMEM = R"=====(
 
                         </tbody>
                     </table>
-                </div>
+                </div> -->
             </div>
         </div>
 

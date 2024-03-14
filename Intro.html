@@ -14,6 +14,13 @@ const char Intro_page[] PROGMEM = R"=====(
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://code.iconify.design/2/2.2.1/iconify.min.js"></script>
+    
+    <link rel="stylesheet" href="https://maxst.icons8.com/vue-static/landings/line-awesome/font-awesome-line-awesome/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link href='https://css.gg/css' rel='stylesheet'>
+
     <style>
         /* Reset CSS */
         * {
@@ -26,7 +33,8 @@ const char Intro_page[] PROGMEM = R"=====(
             font-family: Arial, Helvetica, sans-serif;
             scroll-behavior: smooth;
         }
-   /* Common */
+
+        /* Common */
         .clear {
             clear: both;
         }
@@ -305,11 +313,11 @@ const char Intro_page[] PROGMEM = R"=====(
             color: rgb(0, 0, 0);
         }
 
-        .history{
-                overflow-x: visible;
-                overflow-y:scroll;
-                height:200px;
-            }
+        .history {
+            overflow-x: visible;
+            overflow-y: scroll;
+            height: 200px;
+        }
 
         .video-box {
             height: 100%;
@@ -378,6 +386,14 @@ const char Intro_page[] PROGMEM = R"=====(
             float: left;
             width: 33.333333%;
             height: 50%;
+        }
+
+        .history{
+            overflow-x: visible;
+            overflow-y:scroll;
+            background-color: #fff;
+            height:700px;
+            margin-top: 5%;
         }
 
         @media only screen and (max-width: 700px) {
@@ -484,10 +500,10 @@ const char Intro_page[] PROGMEM = R"=====(
                 <li><a href="#Home">Home</a></li>
                 <li><a href="#Theoretical">Theoretical</a></li>
                 <!-- <li><a href="#Action">Action</a></li> -->
-                <li><a href="#SomethingNews">What's new ?</a></li>
+                <li><a href="#Realtime_data">Realtime Data</a></li>
                 <!-- <li><a href="#Applications">Applications</a></li> -->
                 <li><a href="#Contact">Contact</a></li>
-                <li><a href="#Realtime_data">Realtime Data</a></li>
+                <!-- <li><a href="#Realtime_data">Realtime Data</a></li> -->
 
             </ul>
         </div>
@@ -503,11 +519,12 @@ const char Intro_page[] PROGMEM = R"=====(
 
                 <!-- Slide images start -->
                 <div class="slide first">
-                    <img src="C:\Users\Admin\Downloads\pc.jpg" alt="">
+                    <img src="E:\Documents\Graduation_Thesis\Report\Model1.png" alt="">
                 </div>
 
                 <div class="slide">
-                    <img src="https://drive.google.com/file/d/1oZph_qIfdH_vi6arlN8U4zTdfMqnvYlf/view?usp=drive_link" alt="">
+                    <img src="E:\Documents\Graduation_Thesis\Report\Model2.png"
+                        alt="">
                 </div>
 
                 <!-- <div class="slide slide3">
@@ -542,71 +559,109 @@ const char Intro_page[] PROGMEM = R"=====(
                 <!-- Img -->
                 <div class="col col-half img-box">
                     <img class="section-img"
-                        src="https://travelupdate.com/wp-content/uploads/2020/02/Split-flap-Solari-departures-board-Qantas-First-Class-lounge-Sydney-1066x640.jpg"
+                        src="https://www.motorolasolutions.com/content/dam/msi/images/video-analytics/license-plate-recognition/l5m_alt_prod_540x304.png"
                         alt="">
                 </div>
 
                 <!-- Theory -->
                 <div class="col col-half text-box">
-                    <h2 class="section-heading text-center">RESEARCH AND SIMULATE SPEED SIGN RECOGNITION SYSTEM IN SELF-DRIVING CAR</h2>
+                    <h2 class="section-heading text-center">RESEARCH AND SIMULATE SPEED SIGN RECOGNITION SYSTEM IN
+                        SELF-DRIVING CAR</h2>
                     <p class="section-sub-heading">Theoretical foundations of Model</p>
-                    <p class="about-text">A split-flap display, often known as a flap display, is an outstanding
-                        installation: the combination of electromechanical, artistic, and technological elements.
-                        It frequently used as a public transportation schedule at airports and train stations in Central
-                        European countries. The familiar 'clack clack clack' sound, the gentle freeze from rotating flap
-                        cards and character
-                        information displays would all amaze onlookers.
+                    <p class="about-text">This research focuses on developing a speed sign recognition system in self-driving cars by combining computer vision methods and deep learning. Utilizing techniques such as image processing and convolutional neural networks (CNNs), the system is trained on a large dataset to ensure accurate and reliable sign detection. Subsequently, the system's performance is evaluated in a simulated environment, providing crucial insights for the future development of autonomous vehicle technology, thereby enhancing safety and efficiency in automated transportation.
                     </p>
                 </div>
             </div>
             <!-- End theory -->
 
-        
+
 
             <!-- Begin Content 3 -->
-            <div id="SomethingNews" class="row content-3">
-                <div class="row content-section">
-                    <!-- Theory -->
-                    <div class="col col-half text-box">
-                        <h2 class="section-heading text-center">What's new ?</h2>
-                        <!-- <p class="section-sub-heading">Theoretical foundations of Split-Flap display</p> -->
-                        <p class="about-text">Each split-flap display is carefully crafted for your unique project.
-                            Every module contains 64 alphanumeric flaps in Vietnamese with accent marks and the English
-                            alphabet,
-                            colors, and some punctuation marks.
-                            The basic displays with 6 letters, each unit has 16cm Height x 9.5cm Width.
-                            You can place the displays on shelf or into frames.
-                        </p>
-                    </div>
-
-                    <div class="col col-half img-box">
-                        <img class="section-img"
-                            src="https://drive.google.com/uc?export=view&id=1wW7ieIDifw6raCQmnwY_fzD4Y7zUPZkX" alt="">
-                    </div>
-                </div>
-            </div>
-            <!-- End Content-3 -->
-
-            <!-- Begin Content 4 -->
             <div id="Realtime_data" class="row content-3">
                 <div class="row content-section">
                     <!-- Theory -->
                     <div class="col col-half text-box">
-                        <h2 class="section-heading text-center">Realtime Log</h2>
-                        <!-- <p class="section-sub-heading">Theoretical foundations of Split-Flap display</p> -->
-                        <p class="about-text">
-                        </p>
-                    </div>
+                        <h2 class="section-heading text-center">Realtime Data</h2>
 
-                    <div class="col col-half img-box">
-                        <img class="section-img"
-                            src="https://drive.google.com/uc?export=view&id=1wW7ieIDifw6raCQmnwY_fzD4Y7zUPZkX" alt="">
+                    </div>
+                    <div class="setup-body text-center history">
+                        <table class="table table-bordered table-hover" id="myHistory">
+                            <thead>
+                                <tr>
+                                    <th scope="col" class="col-1">STT</th>
+                                    <th scope="col" class="col-2">TRAFFIC-SIGN-DETECTED</th>
+                                    <th scope="col" class="col-3">CURRENT-SPEED (KM/H)</th>
+                                    <th scope="col" class="col-4">DATE-TIME</th>
+                                    <th scope="col" class="col-5">ACCURACY (%)</th>
+                                </tr>
+                            </thead>
+                            <!-- <thead>
+                                <tr>
+                                    <th scope="col" class="col-1">01</th>
+                                    <th scope="col" class="col-2">No Parking Sign</th>
+                                    <th scope="col" class="col-3">62</th>
+                                    <th scope="col" class="col-4">01/03/2024 - 15:32:55</th>
+                                    <th scope="col" class="col-5">97%</th>
+                                </tr>
+                            </thead> -->
+                            <!-- <thead>
+                                <tr>
+                                    <th scope="col" class="col-1">02</th>
+                                    <th scope="col" class="col-2">50 km/h Speed Limit Sign</th>
+                                    <th scope="col" class="col-3">61</th>
+                                    <th scope="col" class="col-4">01/03/2024 - 15:36:35</th>
+                                    <th scope="col" class="col-5">97%</th>
+                                </tr>
+                            </thead> -->
+                            <!-- <thead>
+                                <tr>
+                                    <th scope="col" class="col-1">03</th>
+                                    <th scope="col" class="col-2">No Parking Sign</th>
+                                    <th scope="col" class="col-3">57</th>
+                                    <th scope="col" class="col-4">01/03/2024 - 15:38:27</th>
+                                    <th scope="col" class="col-5">98%</th>
+                                </tr>
+                            </thead> -->
+                            <!-- <thead>
+                                <tr>
+                                    <th scope="col" class="col-1">04</th>
+                                    <th scope="col" class="col-2">Pedestrian Crossing Sign</th>
+                                    <th scope="col" class="col-3">60</th>
+                                    <th scope="col" class="col-4">01/03/2024 - 15:45:13</th>
+                                    <th scope="col" class="col-5">92%</th>
+                                </tr>
+                            </thead> -->
+                            <!-- <thead>
+                                <tr>
+                                    <th scope="col" class="col-1">05</th>
+                                    <th scope="col" class="col-2">Curve Warning Sign</th>
+                                    <th scope="col" class="col-3">62</th>
+                                    <th scope="col" class="col-4">01/03/2024 - 15:50:02</th>
+                                    <th scope="col" class="col-5">93%</th>
+                                </tr>
+                            </thead> -->
+                            <!-- <thead>
+                                <tr>
+                                    <th scope="col" class="col-1">06</th>
+                                    <th scope="col" class="col-2">60 km/h Speed Limit Sign</th>
+                                    <th scope="col" class="col-3">58</th>
+                                    <th scope="col" class="col-4">01/03/2024 - 16:00:55</th>
+                                    <th scope="col" class="col-5">98%</th>
+                                </tr>
+                            </thead> -->
+
+                            <tbody>
+
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
             <!-- End Content-3 -->
 
-            
+
+
+
         </div>
     </div>
 
@@ -616,7 +671,8 @@ const char Intro_page[] PROGMEM = R"=====(
             <ul class="socials col-third">
                 <li>
                     <span><i class="fa fa-facebook"></i></span>
-                    <p><a href="https://www.facebook.com/profile.php?id=100023887955215" target="_blank">Nguyen Anh Huy</a></p>
+                    <p><a href="https://www.facebook.com/profile.php?id=100023887955215" target="_blank">Nguyen Anh
+                            Huy</a></p>
                 </li>
 
                 <li>
